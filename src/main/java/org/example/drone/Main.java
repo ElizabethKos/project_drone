@@ -25,17 +25,17 @@ public class Main {
             fileToRead = fileToRead.toLowerCase();
             switch (fileToRead) {
                 case "txt":
-                    storage.readFromFile("parachute.txt");
+                    storage.readFromFile("drone.txt");
                     t1 = true;
                     break;
 
                 case "xml":
-                    storage.setListStorage(storage.readFromXml("parachute.xml"));
+                    storage.setListStorage(storage.readFromXml("drone.xml"));
                     t1 = true;
                     break;
 
                 case "json":
-                    storage.setListStorage(storage.readDataFromJsonFile("parachute.json"));
+                    storage.setListStorage(storage.readDataFromJsonFile("drone.json"));
                     t1 = true;
                     break;
 
@@ -44,7 +44,7 @@ public class Main {
                     break;
             }
         } while (!t1);
-        System.out.println("Список парашютов получен.");
+        System.out.println("Список дронов получен.");
         for (DroneDTO dto : storage.getList()) {
             System.out.println(dto.toString());
         }
@@ -54,7 +54,7 @@ public class Main {
         String description = "";
         boolean t = true;
         do {
-            System.out.println("Введите данные о парашюте в формате cost,name,description:");
+            System.out.println("Введите данные о дронах в формате cost,name,description:");
             try {
                 String input = scanner.nextLine();
                 String[] parts = input.split(",");
@@ -68,7 +68,7 @@ public class Main {
                         storage.getList().stream().anyMatch(ParachuteDTO -> ParachuteDTO.getDescription().equals(finalDescription)) &&
                         storage.getList().stream().anyMatch(CategoryDto -> CategoryDto.getName().equals(finalName))
                 ) {
-                    System.out.println("Такой парашют уже получен!");
+                    System.out.println("Такой дрон уже получен!");
                     return;
                 }
             } catch (Exception e) {
@@ -82,11 +82,11 @@ public class Main {
         storage.addToListStorage(newParachute);
         storage.addToMapStorage(id, newParachute);
 
-        storage.writeToFile("parachute.txt");
-        storage.writeToXml("parachute.xml", storage.getList());
-        storage.writeDataToJsonFile("parachute.json", storage.getList());
+        storage.writeToFile("drone.txt");
+        storage.writeToXml("drone.xml", storage.getList());
+        storage.writeDataToJsonFile("drone.json", storage.getList());
 
-        System.out.println("Обновленный список парашютов" + storage.getList());
+        System.out.println("Обновленный список дронов" + storage.getList());
         boolean ans = false;
 
         do {
@@ -98,7 +98,7 @@ public class Main {
 
                 case "cost":
                     storage.getList().sort(Comparator.comparing(DroneDTO::getCost));
-                    System.out.println("Парашюты сортированные по cost: ");
+                    System.out.println("Дроны сортированные по cost: ");
                     for (DroneDTO dto : storage.getList()) {
                         System.out.println(dto.toString());
                     }
@@ -107,13 +107,13 @@ public class Main {
 
                 case "name":
                     storage.getList().sort(Comparator.comparing(DroneDTO::getName));
-                    System.out.println("Парашюты сортированные по названию: " + storage.getList());
+                    System.out.println("Дроны сортированные по названию: " + storage.getList());
                     ans = true;
                     break;
 
                 case "description":
                     storage.getList().sort(Comparator.comparing(DroneDTO::getDescription));
-                    System.out.println("Парашюты сортированные по описанию: " + storage.getList());
+                    System.out.println("Дроны сортированные по описанию: " + storage.getList());
                     ans = true;
                     break;
                 default:
@@ -123,9 +123,9 @@ public class Main {
         } while (!ans);
 
         String[] files = new String[]{
-                "parachute.txt",
-                "parachute.json",
-                "parachute.xml"
+                "drone.txt",
+                "drone.json",
+                "drone.xml"
         };
 
         Archiver archiver = new Archiver();
